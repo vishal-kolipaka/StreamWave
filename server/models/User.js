@@ -32,11 +32,13 @@ const userSchema = new mongoose.Schema({
   },
   followers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: []
   }],
   following: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: []
   }],
   createdAt: {
     type: Date,
@@ -48,11 +50,11 @@ const userSchema = new mongoose.Schema({
 
 // Virtual for follower/following counts
 userSchema.virtual('followerCount').get(function () {
-  return this.followers.length;
+  return Array.isArray(this.followers)?this.followers.length:0;
 });
 
 userSchema.virtual('followingCount').get(function () {
-  return this.following.length;
+  return Array.isArray(this.following)?this.following.length:0;
 });
 
 // Ensure virtual fields are serialized

@@ -46,7 +46,6 @@ export const getConversationWithUser = async (req, res) => {
     }
 
     const otherUser = await User.findById(userId).select('username avatarUrl bio');
-
     if (!otherUser) {
       return res.status(404).json({ message: 'User not found' });
     }

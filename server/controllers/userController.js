@@ -8,10 +8,8 @@ export const getUser = async (req, res) => {
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(404).json({ message: 'Invalid user ID format' });
     }
-
-
+    
     let user = await User.findById(id).select('-passwordHash');
-
     // If no user found, return 404 instead of causing populate crash
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
